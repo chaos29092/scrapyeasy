@@ -1,7 +1,7 @@
 import urllib.request, urllib.error, urllib.parse
 import json
 
-def fetch_zhimaip(num=3,time=2):
+def fetch_zhimaip(num=3,time=3):
     proxies = {}
     # time 1为5~25分钟，2为25分~3小时，3为3~6小时
     request = urllib.request.Request('http://webapi.http.zhimacangku.com/getip/time/'+str(time)+'/num/'+str(num)+'/type/2/pro/0/city/0/yys/100026/port/1/ts/1/ys/0/cs/0/lb/1/sb/0/pb/45/mr/1/regions/110000,130000,410000')
