@@ -7,7 +7,7 @@ from scrapy.exceptions import CloseSpider
 log = logging.getLogger('scrapy.randomproxy')
 
 class Mode:
-    RANDOMIZE_PROXY_EVERY_REQUESTS, RANDOMIZE_PROXY_ONCE, SET_CUSTOM_PROXY = range(3)
+    RANDOMIZE_PROXY_EVERY_REQUESTS, RANDOMIZE_PROXY_ONCE = range(2)
 
 class RandomProxy(object):
     def __init__(self, settings):
@@ -24,20 +24,6 @@ class RandomProxy(object):
 
             if self.mode == Mode.RANDOMIZE_PROXY_ONCE:
                 self.chosen_proxy = random.choice(list(self.proxies.keys()))
-        elif self.mode == Mode.SET_CUSTOM_PROXY:
-            custom_proxy = settings.get('CUSTOM_PROXY')
-            self.proxies = {}
-            parts = re.match('(\w+://)([^:]+?:[^@]+?@)?(.+)', custom_proxy.strip())
-            if not parts:
-                raise ValueError('CUSTOM_PROXY is not well formatted')
-
-            if parts.group(2):
-                user_pass = parts.group(2)[:-1]
-            else:
-                user_pass = ''
-
-            self.proxies[parts.group(1) + parts.group(3)] = user_pass
-            self.chosen_proxy = parts.group(1) + parts.group(3)
 
     @classmethod
     def from_crawler(cls, crawler):
