@@ -1,7 +1,7 @@
 import re
 import random
 import logging
-from chemnet.mymiddlewares import getproxies
+from scrapyeasy.mymiddlewares import getproxies
 from scrapy.exceptions import CloseSpider
 
 log = logging.getLogger('scrapy.randomproxy')
@@ -54,13 +54,14 @@ class RandomProxy(object):
             return
         proxy = request.meta['proxy']
 
-        if self.proxies.get(proxy) > spider.settings['PROXY_MAX_FAIL']:
-            try:
-                del self.proxies[proxy]
-                log.info('delete'+proxy)
-            except KeyError:
-                pass
-        else:
-            self.proxies[proxy] += 1
+        if self.proxies.get(proxy):
+            if self.proxies.get(proxy) > spider.settings['PROXY_MAX_FAIL']:
+                try:
+                    del self.proxies[proxy]
+                    log.info('delete'+proxy)
+                except KeyError:
+                    pass
+            else:
+                self.proxies[proxy] += 1
 
         request.meta["exception"] = True
