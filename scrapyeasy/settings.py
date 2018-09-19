@@ -20,15 +20,10 @@ MONGO_DATABASE = 'scrapyeasy'
 LOG_FILE = 'spider.log'
 LOG_LEVEL = 'INFO'
 
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'scrapyeasy (+http://www.yourdomain.com)'
-
-# Obey robots.txt rules
-ROBOTSTXT_OBEY = False
-
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 CONCURRENT_REQUESTS = 100
-
+# Obey robots.txt rules
+ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
@@ -105,21 +100,13 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure randomproxy
 # less than this number then get more proxies
-MIN_PROXIES = 3
+MIN_PROXIES = 2
 # if greater than this value, deleted the proxy
-PROXY_MAX_FAIL = 8
+PROXY_MAX_FAIL = 6
 # how many proxies to get once time, default 3
-GET_PROXIES_NUM = 2
-# Proxy mode
-# 0 = Every requests have different proxy
-# 1 = Take only one proxy from the list and assign it to every requests
-# 2 = Put a custom proxy to use in the settings
-PROXY_MODE = 0
-# If proxy mode is 2 uncomment this sentence :
-#CUSTOM_PROXY = "http://host1:port"
-
+GET_PROXIES_NUM = 1
 # Retry many times since proxies often fail
-RETRY_TIMES = 2
-DOWNLOAD_TIMEOUT = 30
+RETRY_TIMES = 3
+# DOWNLOAD_TIMEOUT = 30
 # Retry on most error codes since proxies fail for different reasons
 RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
