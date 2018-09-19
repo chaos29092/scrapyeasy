@@ -9,8 +9,6 @@ log = logging.getLogger('scrapy.randomproxy')
 
 class RandomProxy(object):
     def __init__(self, settings):
-        self.chosen_proxy = ''
-
         # 获取proxies
         self.proxies = {}
         self.proxies.update(getproxies.get_proxies(settings.get('MIN_PROXIES')))
