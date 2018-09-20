@@ -22,9 +22,6 @@ class RandomProxy(object):
 
     def process_request(self, request, spider):
         # if request has change_proxy meta, fail num +1
-        if 'proxy' in request.meta:
-            if request.meta["exception"] is False:
-                return
         if 'change_proxy' in request.meta:
             if request.meta['change_proxy'] == True:
                 proxy = request.meta['proxy']
