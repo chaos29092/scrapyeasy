@@ -55,7 +55,7 @@ class scrapyeasySpider(CrawlSpider):
         if (re.match('The system', response.selector.xpath('string(body)').extract_first())):
             req = response.request
             req.meta["change_proxy"] = True
-            yield scrapy.Request(url=response.url, dont_filter=True)
+            yield scrapy.Request(url=response.url, dont_filter=True, meta=req.meta)
             # 测试是否触发这个if的时候用
             log.info('111')
         else:
