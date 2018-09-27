@@ -12,6 +12,7 @@ class RandomProxy(object):
         # 获取proxies
         self.proxies = {}
         self.proxies.update(getproxies.get_proxies(settings.get('MIN_PROXIES')))
+        self.proxy_num = settings.get('MIN_PROXIES')
 
         if len(self.proxies) == 0:
             raise ValueError('do not get proxies')
@@ -29,6 +30,7 @@ class RandomProxy(object):
                     self.proxies[proxy] += 1
                     if self.proxies[proxy] > spider.settings['PROXY_MAX_FAIL']:
                         del self.proxies[proxy]
+                        log.debug('delete proxy: ' + proxy)
                 except KeyError:
                     pass
                 log.debug('%s fail num +1' % (proxy))
@@ -37,7 +39,8 @@ class RandomProxy(object):
         # if proxies less than MIN_PROXIES, get new proxies
         if len(self.proxies) < spider.settings['MIN_PROXIES']:
             self.proxies.update(getproxies.get_proxies(spider.settings['GET_PROXIES_NUM']))
-            log.debug('get new proxy, %d proxies left' % len(self.proxies))
+            self.proxy_num += spider.settings['GET_PROXIES_NUM']
+            log.info('get new proxy, %d proxies left, %d proxies used' % (len(self.proxies),self.proxy_num))
         # if proxies == 0 ,close the spider
         if len(self.proxies) == 0:
             raise CloseSpider('All proxies are unusable, cannot proceed')
@@ -53,7 +56,7 @@ class RandomProxy(object):
             if self.proxies.get(proxy) > spider.settings['PROXY_MAX_FAIL']:
                 try:
                     del self.proxies[proxy]
-                    log.info('delete'+proxy)
+                    log.debug('delete proxy: '+proxy)
                 except KeyError:
                     pass
             else:
