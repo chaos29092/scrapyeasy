@@ -38,7 +38,7 @@ class RandomProxy(object):
 
         # if proxies less than MIN_PROXIES, get new proxies
         if len(self.proxies) < spider.settings['MIN_PROXIES']:
-            self.proxies.update(getproxies.get_proxies(spider.settings['GET_PROXIES_NUM']))
+            self.proxies.update(getproxies.get_proxies(spider.settings['GET_PROXIES_NUM'],spider.settings['ZHIMA_TIME']))
             self.proxy_num += spider.settings['GET_PROXIES_NUM']
             log.info('get new proxy, %d proxies left, %d proxies used' % (len(self.proxies),self.proxy_num))
         # if proxies == 0 ,close the spider

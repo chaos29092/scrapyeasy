@@ -24,6 +24,42 @@ LOG_LEVEL = 'INFO'
 CONCURRENT_REQUESTS = 100
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
+
+# Enable or disable downloader middlewares
+# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
+DOWNLOADER_MIDDLEWARES = {
+    # rotate user_agent for desktop or mobile
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapyeasy.mymiddlewares.rotate_useragent.RotateUserAgentDesktopMiddleware': 543,
+    # 'scrapyeasy.mymiddlewares.rotate_useragent.RotateUserAgentMobileMiddleware': 543,
+    # use random proxy
+    # 'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+    # 'scrapyeasy.mymiddlewares.randomproxy.RandomProxy': 100,
+    # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+}
+# Configure randomproxy
+# less than this number then get more proxies
+MIN_PROXIES = 2
+# if greater than this value, deleted the proxy
+PROXY_MAX_FAIL = 6
+# how many proxies to get once time, default 3
+GET_PROXIES_NUM = 1
+# zhima proxy time 1为5~25分钟，2为25分~3小时，3为3~6小时
+ZHIMA_TIME = 3
+# Retry many times since proxies often fail
+RETRY_TIMES = 3
+# DOWNLOAD_TIMEOUT = 30
+# Retry on most error codes since proxies fail for different reasons
+RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
+
+# Enable and configure the AutoThrottle extension (disabled by default)
+# See https://doc.scrapy.org/en/latest/topics/autothrottle.html
+# The initial download delay
+# The maximum download delay to be set in case of high latencies
+# AUTOTHROTTLE_ENABLED = True
+# AUTOTHROTTLE_START_DELAY = 2
+# AUTOTHROTTLE_MAX_DELAY = 5
+
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
@@ -50,18 +86,7 @@ ROBOTSTXT_OBEY = False
 #    'scrapyeasy.middlewares.TutorialSpiderMiddleware': 543,
 #}
 
-# Enable or disable downloader middlewares
-# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
-    # rotate user_agent for desktop or mobile
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'scrapyeasy.mymiddlewares.rotate_useragent.RotateUserAgentDesktopMiddleware': 543,
-    # 'scrapyeasy.mymiddlewares.rotate_useragent.RotateUserAgentMobileMiddleware': 543,
-    # use random proxy
-    # 'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
-    # 'scrapyeasy.mymiddlewares.randomproxy.RandomProxy': 100,
-    # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
-}
+
 
 
 # Enable or disable extensions
@@ -76,13 +101,7 @@ DOWNLOADER_MIDDLEWARES = {
 #    'scrapyeasy.pipelines.TutorialPipeline': 300,
 #}
 
-# Enable and configure the AutoThrottle extension (disabled by default)
-# See https://doc.scrapy.org/en/latest/topics/autothrottle.html
-# The initial download delay
-# The maximum download delay to be set in case of high latencies
-# AUTOTHROTTLE_ENABLED = True
-# AUTOTHROTTLE_START_DELAY = 2
-# AUTOTHROTTLE_MAX_DELAY = 5
+
 
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
@@ -98,15 +117,3 @@ DOWNLOADER_MIDDLEWARES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-# Configure randomproxy
-# less than this number then get more proxies
-MIN_PROXIES = 2
-# if greater than this value, deleted the proxy
-PROXY_MAX_FAIL = 6
-# how many proxies to get once time, default 3
-GET_PROXIES_NUM = 1
-# Retry many times since proxies often fail
-RETRY_TIMES = 3
-# DOWNLOAD_TIMEOUT = 30
-# Retry on most error codes since proxies fail for different reasons
-RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
